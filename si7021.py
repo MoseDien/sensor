@@ -8,8 +8,8 @@ import smbus
 import time
 
 addr = 0x40 # SI7021 address, 0x40(64)
-cmd_humi = 0xF5 // no hold master mode
-cmd_temp = 0xF3 // no hold master mode
+cmd_humi = 0xF5 # no hold master mode
+cmd_temp = 0xF3 # no hold master mode
 cmd_reset = 0xFE
 
 def get_bus():

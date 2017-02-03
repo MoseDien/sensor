@@ -134,7 +134,7 @@ class SHT21Test(unittest.TestCase):
 
 if __name__ == "__main__":
     try:
-        with SHT21(0) as sht21:
+        with SHT21(1) as sht21:
             print "Temperature: %s" % sht21.read_temperature()
             print "Humidity: %s" % sht21.read_humidity()
     except IOError, e:
