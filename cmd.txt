@@ -1,0 +1,20 @@
+
+# i2c
+i2cdetect -l
+i2cdetect -r -y 1
+
+i2cdump -f -y 1 0x40
+
+i2cget
+i2cset
+
+# sqlite3
+.tables
+
+SELECT * FROM htpms LIMIT 5;
+SELECT * FROM htpms ORDER BY date DESC LIMIT 5;
+
+# change system local zone for pi
+sudo cp /usr/share/zoneinfo/Asia/Chongqing /etc/localtime
+
+#
