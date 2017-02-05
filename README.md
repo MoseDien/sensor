@@ -3,3 +3,11 @@ I want to know embedded system and hardware, current I have,
 # Arduino uno
 # PMS7003 for Air Quanlity
 # si7021 & sht21 for humidility and temperature
+
+More devices I want to add:
+# LED
+# NFC chip
+# Bluetooth
+# audio
+# light
+# 
