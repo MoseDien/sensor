@@ -40,10 +40,14 @@ def read_temp(bus):
     fTemp = cTemp * 1.8 + 32
     return cTemp
 
-if __name__ == '__main__':
+def read_humi_temp():
     bus = get_bus()
     humidity = read_humi(bus)
     time.sleep(0.3)
     cTemp = read_temp(bus)
+    return (humidity, cTemp)
+ 
+if __name__ == '__main__':
+    humidity, cTemp = read_humi_temp()
     print "Relative Humidity is : %.2f %%" %humidity
     print "Temperature in Celsius is : %.2f C" %cTemp

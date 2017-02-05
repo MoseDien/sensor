@@ -22,30 +22,32 @@ def read_one_data(ser):
                 rv += ser.read(32)
                 return rv
 
-def read_native_pm(ser):
+def read_native_pms(ser):
     recv = read_one_data(ser)
     length = unpack('>h', recv[2:4])[0]
     if length != 28:
         return (False, "the length of data is not equal 28.")
-    data = unpack('>hhhhhhhhhhhhh', recv[4:30])
+    pms = unpack('>hhhhhhhhhhhhh', recv[4:30])
+
+    # check sum
     check = unpack('>h', recv[30:32])[0]
     sum = 0x42 + 0x4d + 28
-    for d in data:
-        sum += (d & 0x00ff)
-        sum += ((d & 0xff00)>>8)
+    for pm in pms:
+        sum += (pm & 0x00ff)
+        sum += ((pm & 0xff00)>>8)
     if check != sum:
-        pass;#return (False, "check sum is not right, hope:actual, {}:{}".format(sum, check))
-    return (True, data)
+        return (False, "check sum is not right, hope:actual, {}:{}".format(sum, check))
+
+    return (True, pms)
 
 if __name__ == '__main__':
-    ser = open_device("/dev/ttyUSB0")
-    try:
-        ret, data = read_native_pm(ser)
-        ser.flushInput()
+    with open_device("/dev/ttyUSB0") as ser:
+        ret, pms = read_native_pms(ser)
+	ser.flushInput()
         if ret == False:
-           print "read error: " , data
-        print "version: ", (data[12] & 0xff00)>>8
-        print "error code: ", (data[12] & 0x00ff)
+           print "read error: " , pms
+        print "version: ", (pms[12] & 0xff00)>>8
+        print "error code: ", (pms[12] & 0x00ff)
         print(
               'PM1.0(CF=1): {}\n'
               'PM2.5(CF=1): {}\n'
@@ -59,11 +61,8 @@ if __name__ == '__main__':
               '>2.5um     : {}\n'
               '>5.0um     : {}\n'
               '>10um      : {}\n'
-              .format(data[0], data[1], data[2],
-                                       data[3], data[4], data[5],
-                                       data[6], data[7], data[8],
-                                       data[9], data[10], data[11]))
+              .format(pms[0], pms[1], pms[2],
+                                       pms[3], pms[4], pms[5],
+                                       pms[6], pms[7], pms[8],
+                                       pms[9], pms[10], pms[11]))
 
-    except KeyboardInterrupt:
-        if ser != None:
-            ser.close()
