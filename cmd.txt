@@ -17,4 +17,9 @@ SELECT * FROM htpms ORDER BY date DESC LIMIT 5;
 # change system local zone for pi
 sudo cp /usr/share/zoneinfo/Asia/Chongqing /etc/localtime
 
+timedatectl list-timezones
+sudo timedatectl set-timezone Asia/Shanghai
+
 #
+date
+date -u
