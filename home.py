@@ -45,6 +45,6 @@ if __name__ == '__main__':
                 time_s = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
                 pms = read_pms(ser)
                 humi, temp = si7021.read_humi_temp()
-                print time_s, pms[4], humi, temp
+                print "{} PM2.5: {}, Humidity: {:.2f}, Temprature: {:.2f}".format(time_s, pms[4], humi, temp)
 		save_to_db(conn, time_i, time_s, humi, temp, pms)
                 time.sleep(10)
